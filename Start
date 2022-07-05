@@ -1,0 +1,20 @@
+pragma solidity ^0.4.17;
+
+contract Lottery{
+    address public manager;
+    address[] public players;
+
+
+    function Lottery() public{
+        manager = msg.sender;
+    }
+    function enter() public payable{
+        //함수 호출시 이더를 지불할 경우 payable을 사용
+        //require은 요구사항 충족하는지 확인 T면 진행 F면 중지
+
+        require(msg.value > .01 ether);
+
+        players.push(msg.sender);
+
+    }
+}
