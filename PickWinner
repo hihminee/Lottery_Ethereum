@@ -1,23 +1,31 @@
+pragma solidity ^0.4.17;
+
 contract Lottery{
-  address public manager;
-
- function Lottery() public {
-     manager = msg.sender;
-  }
-
-}
+    address public manager;
+    address[] public players;
 
 
-//랜덤수를 반환하는 것
-//sha3(); = keccak256(현재블록 난이도, 현재시간, 참가자들이 주소);
+    function Lottery() public{
+        manager = msg.sender;
+    }
+    function enter() public payable{
+        //함수 호출시 이더를 지불할 경우 payable을 사용
+        //require은 요구사항 충족하는지 확인 T면 진행 F면 중지
+
+        require(msg.value > .01 ether);
+
+        players.push(msg.sender);
+
+    }
+    
+   //랜덤수를 반환하는 것
+   //sha3(); = keccak256(현재블록 난이도, 현재시간, 참가자들이 주소);
    function random() private view returns(uint){
           return uint(keccak256(block.difficulty, now, players));  
    }
-
-
-  
-  //random ()  % playter.length =결과값이 players 배열의 인덱스값
-  function pickWinner() public{
+   
+   //random ()  % playter.length =결과값이 players 배열의 인덱스값
+   function pickWinner() public{
 	      uint index = random() % players.length;     
 	      players[index].transfer(this.balance);  
         players = new address[](0);
@@ -26,7 +34,7 @@ contract Lottery{
         //transfer(1) 하나를 전송한다는 의미
         //balance  현재 계약에서 입력된 모든 돈의 양을players[index]로 전송한다는 뜻
         //players 초기화된 요소 없이 nothing  
- }
+   }
 
 }
   
