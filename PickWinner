@@ -7,31 +7,6 @@ contract Lottery{
 
 }
 
-msg 글로벌변수
-property name
-msg.data
-msg.gas 
-msg.sender  호출 주소
-msg.value   보내진 이더의 양
-
-
-참조 유형 reference Type
-
-fixed array       고정 길이 배열  int[3]과 같은
-dynamic array   동적배열         int[]
-mapping         
-struct
-
-
-contract Test {
-   string public myArray;
-   
-   function Test() public {
-	      myArray.push("hi");
-   }
-   function getArray() public view returns (string[]){
-         return myArray;
-   }
 
 //랜덤수를 반환하는 것
 //sha3(); = keccak256(현재블록 난이도, 현재시간, 참가자들이 주소);
@@ -40,8 +15,8 @@ contract Test {
    }
 
 
-//random ()  % playter.length =결과값이 players 배열의 인덱스값
-
+  
+  //random ()  % playter.length =결과값이 players 배열의 인덱스값
   function pickWinner() public{
 	      uint index = random() % players.length;     
 	      players[index].transfer(this.balance);  
